@@ -1,0 +1,16 @@
+<div class="block_ask_ai">
+    <div id="ask-ai-chatbox-{{instanceid}}" class="d-flex flex-column" style="height: 350px;">
+        
+        <div id="ai-history-{{instanceid}}" class="flex-grow-1 overflow-auto p-2 border rounded bg-light mb-2" style="font-size: 0.9rem;">
+            <div class="text-muted small mb-2">Hello! I'm your course assistant. How can I help you today?</div>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="ai-input-{{instanceid}}" class="form-control" placeholder="Ask a question..." aria-label="Ask AI">
+            <button class="btn btn-primary" type="button" id="ai-send-{{instanceid}}">
+                <span id="ai-btn-text-{{instanceid}}">Send</span>
+                <span id="ai-btn-spinner-{{instanceid}}" class="spinner-border spinner-border-sm d-none" role="status"></span>
+            </button>
+        </div>
+    </div>
+</div>
