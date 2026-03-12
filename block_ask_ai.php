@@ -30,11 +30,6 @@ class block_ask_ai extends block_base {
 
         $this->content = new stdClass();
         
-        // Ensure we are in a course context.
-        if ($COURSE->id <= 1) { // 1 is usually the site/frontpage ID.
-            $this->content->text = get_string('notincourse', 'block_ask_ai');
-            return $this->content;
-        }
 
         // Prepare data for the Mustache template.
         $renderdata = [
