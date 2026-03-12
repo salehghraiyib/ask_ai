@@ -1,6 +1,9 @@
 <?php
 namespace block_ask_ai;
 
+global $CFG;
+require_once($CFG->libdir . '/filelib.php');
+
 class gemini_client {
 public static function generate_response($prompt, $system_instruction = '') {
     $apikey = get_config('block_ask_ai', 'gemini_api_key');

@@ -35,6 +35,7 @@ class reindex_courses extends \core\task\scheduled_task {
             }
             
             try {
+                // 3. Generate the vector for the combined course + section text.
                 $vector = gemini_client::get_embedding($content);
                 
                 $record = new \stdClass();
