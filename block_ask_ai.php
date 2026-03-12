@@ -3,7 +3,7 @@
  * Ask AI Block - Course Level Assistant
  *
  * @package    block_ask_ai
- * @copyright  2026 Your Name/Organization
+ * @copyright  2026 Saleh/TUCED
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -11,9 +11,6 @@ defined('MOODLE_INTERNAL') || die();
 
 class block_ask_ai extends block_base {
 
-    /**
-     * Sets the block title and initializes the instance.
-     */
     public function init() {
         $this->title = get_string('pluginname', 'block_ask_ai');
     }
@@ -46,13 +43,12 @@ class block_ask_ai extends block_base {
             'coursename' => format_string($COURSE->fullname),
         ];
 
-        // 1. Render the HTML from the Mustache template.
+        // Render the HTML from the Mustache template.
         $this->content->text = $OUTPUT->render_from_template('block_ask_ai/chat', $renderdata);
 
         $this->content->footer = '';
 
-        // 3. Initialize the JavaScript (AMD module).
-        // This passes the instance ID and course ID directly to your JS init function.
+        // Initialize the JavaScript (AMD module).
         $PAGE->requires->js_call_amd('block_ask_ai/chatv2', 'init', [
             $this->instance->id, 
             $COURSE->id
@@ -69,8 +65,8 @@ class block_ask_ai extends block_base {
         return [
             'course-view'    => true, // Allow on course main page.
             'site'           => false, // Disallow on front page.
-            'mod'            => true,  // Allow inside activities (optional).
-            'my'             => false, // Disallow on Dashboard (unless you want general AI).
+            'mod'            => true,  // Allow inside activities
+            'my'             => true, // Disallow on Dashboard
         ];
     }
 

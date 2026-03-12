@@ -1,6 +1,6 @@
 .block_ask_ai .badge {
     font-weight: normal;
-    white-space: pre-wrap; /* Preserves line breaks from Gemini */
+    white-space: pre-wrap;
     display: inline-block;
     line-height: 1.4;
 }
