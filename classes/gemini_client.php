@@ -42,10 +42,10 @@ public static function generate_response($prompt, $system_instruction = '') {
 
     public static function get_embedding($text) {
     $apikey = get_config('block_ask_ai', 'gemini_api_key');
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key={$apikey}";
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key={$apikey}";
 
     $payload = [
-        "model" => "models/text-embedding-004",
+        "model" => "models/gemini-embedding-001",
         "content" => ["parts" => [["text" => $text]]]
     ];
 
@@ -54,6 +54,13 @@ public static function generate_response($prompt, $system_instruction = '') {
     $response = $curl->post($url, json_encode($payload));
     $result = json_decode($response);
 
-    return $result->embedding->values; // This returns an array of floats
+    // Replace it with this safer version:
+    if (isset($result->embedding) && isset($result->embedding->values)) {
+        return $result->embedding->values;
+    }
+
+    // If it's not there, log the error for debugging
+    mtrace("API Error Response: " . json_encode($result));
+    throw new \Exception("Embedding values missing from API response.");
 }
 }

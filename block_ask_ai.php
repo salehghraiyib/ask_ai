@@ -64,7 +64,7 @@ class block_ask_ai extends block_base {
     public function applicable_formats() {
         return [
             'course-view'    => true, // Allow on course main page.
-            'site'           => false, // Disallow on front page.
+            'site'           => true, // Disallow on front page.
             'mod'            => true,  // Allow inside activities
             'my'             => true, // Disallow on Dashboard
         ];
