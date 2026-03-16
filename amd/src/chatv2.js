@@ -14,28 +14,27 @@ define(["core/ajax", "core/notification"], function (Ajax, Notification) {
       const formatResponse = (text) => {
         let html = text;
 
-        // 1. Convert URLs to clickable buttons/links
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        html = html.replace(urlRegex, function (url) {
-          return `<a href="${url}" target="_blank" class="btn btn-sm btn-outline-primary mt-2 d-inline-block">View Course <i class="fa fa-external-link ms-1"></i></a>`;
+        const linkRegex = /^LINK:(https?:\/\/[^\s]+)/gm;
+        html = html.replace(linkRegex, function (match, url) {
+          return `<div class="mt-3">
+                    <a href="${url}" target="_blank" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                        <i class="fa fa-graduation-cap me-2"></i> Kurs aufrufen
+                    </a>
+                </div>`;
         });
 
-        // 2. Convert **bold** to <strong>
+        // 2. Standard-Markdown Formatierungen
         html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-        // 3. Convert * bullet points to list items (handle multi-line)
         if (html.includes("* ")) {
           html = html.replace(/^\* (.*)/gm, "<li>$1</li>");
-          // Wrap bullet lines in a <ul> if they exist
           html = html.replace(
             /(<li>.*<\/li>)/s,
             '<ul class="ps-3 mb-0">$1</ul>',
           );
         }
 
-        // 4. Convert newlines to breaks for general spacing
         html = html.replace(/\n/g, "<br>");
-
         return html;
       };
 
