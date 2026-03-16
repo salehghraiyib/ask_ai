@@ -12,29 +12,29 @@ define(["core/ajax", "core/notification"], function (Ajax, Notification) {
        * Handles Bold, Lists, and Clickable Links.
        */
       const formatResponse = (text) => {
-        let html = text;
+        // 1. Zuerst den Text bereinigen und Zeilenumbrüche in normales HTML umwandeln
+        let html = text.trim().replace(/\n/g, "<br>");
 
-        const linkRegex = /^LINK:(https?:\/\/[^\s]+)/gm;
-        html = html.replace(linkRegex, function (match, url) {
-          return `<div class="mt-3">
-                    <a href="${url}" target="_blank" class="btn btn-primary rounded-pill px-4 shadow-sm">
-                        <i class="fa fa-graduation-cap me-2"></i> Kurs aufrufen
+        // 2. Standard-Markdown für Fettgedrucktes
+        html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+        // 3. Den Button-Marker suchen und in einen sauberen Button umwandeln
+        // Wir nutzen das Format [BUTTON:Kursname|URL], das wir in der PHP-Instruktion definiert haben
+        const buttonRegex = /\[BUTTON:(.*?)\|(https?:\/\/[^\s\]]+)\]/g;
+
+        html = html.replace(buttonRegex, function (match, courseName, url) {
+          // Wir geben hier einen kompakten Container zurück, der NICHT von <br> unterbrochen wird
+          return `<div class="button-container mt-2">
+                    <a href="${url.trim()}" target="_blank" class="btn btn-outline-primary rounded-pill px-4 shadow-sm fw-bold">
+                        ${courseName} <i class="fa fa-external-link ms-1"></i>
                     </a>
                 </div>`;
         });
 
-        // 2. Standard-Markdown Formatierungen
-        html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        // 4. Bereinigung: Falls die KI noch alte Markdown-Links [Name](URL) sendet,
+        // entfernen wir die Klammern, um doppelten Text zu vermeiden.
+        html = html.replace(/\[(.*?)\]\((.*?)\)/g, "$1");
 
-        if (html.includes("* ")) {
-          html = html.replace(/^\* (.*)/gm, "<li>$1</li>");
-          html = html.replace(
-            /(<li>.*<\/li>)/s,
-            '<ul class="ps-3 mb-0">$1</ul>',
-          );
-        }
-
-        html = html.replace(/\n/g, "<br>");
         return html;
       };
 
