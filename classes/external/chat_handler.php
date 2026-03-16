@@ -58,22 +58,31 @@ class chat_handler extends external_api {
             $top_matches = array_slice($matches, 0, 3);
 
             // 5. Build the "Knowledge Navigator" Context.
-            $context_text = "";
-            foreach ($top_matches as $match) {
-                $url = $CFG->wwwroot . "/course/view.php?id=" . $match['courseid'];
-                $context_text .= "Content: {$match['content']}\nLink: {$url}\n\n";
-            }
+$context_text = "";
+foreach ($top_matches as $match) {
+    $url = $CFG->wwwroot . "/course/view.php?id=" . $match['courseid'];
+    // We explicitly label the context for the AI to reference.
+    $context_text .= "QUELLE (Kurs ID: {$match['courseid']}):\n{$match['content']}\nLink zum Kurs: {$url}\n---\n";
+}
 
-            $instruction = "You are the Knowledge Navigator. Use ONLY the provided context to answer. Always provide links.";
-            $user_prompt = "Context:\n" . $context_text . "\n\nQuestion: " . $query;
+// Updated professional German instruction for a "Navigator" persona.
+$instruction = "Du bist der offizielle CATI Wissens-Navigator. Deine Aufgabe ist es, Nutzer präzise durch das Wissensökosystem zu führen. 
+Beachte dabei folgende Regeln:
+1. Antworte ausschließlich auf Basis des bereitgestellten Kontexts.
+2. Wenn du einen Kurs empfiehlst, nenne explizit den Namen des Kurses und füge den entsprechenden Link als Button-taugliche URL ein.
+3. Erkläre kurz, WARUM dieser Inhalt für die Anfrage des Nutzers relevant ist (Navigation statt nur Suche).
+4. Falls die Information nicht im Kontext enthalten ist, antworte höflich, dass du dazu aktuell keine Informationen im Netzwerk finden kannst.
+5. Antworte immer auf Deutsch in einem professionellen, hilfreichen Ton.";
 
-            $answer = gemini_client::generate_response($user_prompt, $instruction);
+$user_prompt = "Hier ist der verfügbare Wissenskontext:\n" . $context_text . "\n\nAnfrage des Nutzers: " . $query;
+
+$answer = gemini_client::generate_response($user_prompt, $instruction);
             $status = 200;
 
         } catch (\Exception $e) {
-            $answer = "I encountered an error navigating the knowledge base: " . $e->getMessage();
-            $status = 500;
-        }
+    $answer = "Bei der Analyse des Wissensnetzwerks ist ein Fehler aufgetreten: " . $e->getMessage();
+    $status = 500;
+}
 
         return [
             'status' => $status,

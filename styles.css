@@ -3,6 +3,10 @@
  * These rules strip away the standard Moodle block container.
  */
 
+ .block_ask_ai .card-title {
+    display: none !important;
+}
+
 /* Remove the white box, border, and shadow from the Moodle block itself */
 .block_ask_ai.card {
     border: none !important;
