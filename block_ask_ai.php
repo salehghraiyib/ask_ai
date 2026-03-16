@@ -11,6 +11,10 @@ defined('MOODLE_INTERNAL') || die();
 
 class block_ask_ai extends block_base {
 
+    public function hide_header() {
+        return true;
+    }
+
     public function init() {
         $this->title = get_string('pluginname', 'block_ask_ai');
     }
