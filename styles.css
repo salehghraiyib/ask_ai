@@ -1,38 +1,90 @@
+/**
+ * Layout: "Natural Look" Integration
+ * These rules strip away the standard Moodle block container.
+ */
+
+/* Remove the white box, border, and shadow from the Moodle block itself */
 .block_ask_ai.card {
     border: none !important;
     background-color: transparent !important;
     box-shadow: none !important;
 }
 
-/* Remove padding added by Moodle core to block content */
+/* Remove default padding so our custom interface sits flush */
 .block_ask_ai .card-body {
     padding: 0 !important;
 }
 
+/**
+ * Input Field: Floating Label & Focus
+ */
+
+/* Position the "Ihr Einstieg..." label correctly above the bar */
 .block_ask_ai .navigator-label {
-    z-index: 10;
+    z-index: 10 !important;
     top: -10px;
     left: 20px;
     font-size: 0.85rem;
     color: #6c757d;
+    background-color: #ffffff; /* Ensure background is white to cover the bar border */
+    padding: 0 5px;
 }
 
-.block_ask_ai .ai-reply {
+/* Fix for the blue focus glow jumping over the title/label */
+.block_ask_ai .form-control:focus {
+    z-index: 1 !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15) !important;
+    border-color: #80bdff !important;
+}
+
+/**
+ * Response Area: Single-Response Bordered Design
+ * This makes the AI reply look like a distinct part of the plugin.
+ */
+
+/* The main container for the AI's answer */
+.block_ask_ai .ai-response-card {
     background: #ffffff;
-    border-left: 4px solid #007bff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 2px solid #007bff; /* The blue border you requested */
+    border-radius: 12px;
+    position: relative;
+    margin-top: 30px; /* Space for the badge */
     padding: 1.5rem;
-    margin-bottom: 1rem;
+    color: #333;
+    line-height: 1.6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.block_ask_ai .user-query {
+/* The "Navigator Antwort" badge pinned to the top border */
+.block_ask_ai .ai-response-card::before {
+    content: "Navigator Antwort";
+    position: absolute;
+    top: -14px;
+    left: 20px;
     background: #007bff;
     color: white;
-    border-radius: 20px 20px 0 20px;
-    padding: 0.5rem 1rem;
-    display: inline-block;
-    float: right;
-    clear: both;
-    margin-bottom: 1rem;
+    padding: 2px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/**
+ * User Query: Minimalist Label
+ */
+
+/* Shows what the user just asked above the AI response */
+.block_ask_ai .user-query-label {
+    border-left: 3px solid #dee2e6;
+    padding-left: 15px;
+    margin-bottom: 15px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Ensure links inside the AI response look like professional buttons */
+.block_ask_ai .ai-response-card a.btn {
+    text-decoration: none;
+    margin-top: 10px;
 }

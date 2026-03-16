@@ -42,41 +42,38 @@ define(["core/ajax", "core/notification"], function (Ajax, Notification) {
       /**
        * Adds a message bubble to the history area.
        */
+      // Inside your init function in chatv2.js
       const addMessage = (content, isUser) => {
         history.classList.remove("d-none");
-        const div = document.createElement("div");
 
         if (isUser) {
-          div.className = "user-query shadow-sm";
-          div.innerText = content;
+          // Clear everything for a fresh start
+          history.innerHTML = "";
+          const div = document.createElement("div");
+          div.className = "user-query-label mb-2 text-muted small italic";
+          div.innerText = `Ihre Anfrage: "${content}"`;
+          history.appendChild(div);
         } else {
-          div.className = "ai-reply";
-          div.innerHTML = formatResponse(content); // Using the formatter from before
+          // Create the bordered response container
+          const div = document.createElement("div");
+          div.className = "ai-response-card p-4 shadow-sm";
+          div.innerHTML = formatResponse(content);
+          history.appendChild(div);
         }
-
-        history.appendChild(div);
-        history.scrollTop = history.scrollHeight;
+        history.scrollTop = 0; // Scroll to top to show the new answer
       };
 
-      /**
-       * Sends the query to the Moodle external function.
-       */
       const performSearch = () => {
         const query = inputField.value.trim();
         if (!query) return;
 
-        // 1. Set the loading text inside the button or a separate status div
-        const loadingText = "Identifiziere relevante Inhalte...";
+        // Safety check: ensure elements exist before touching classList
+        if (spinner) spinner.classList.remove("d-none");
+        if (btnText) btnText.innerText = "Identifiziere relevante Inhalte...";
 
-        // Update the button text to show the agent is thinking
-        btnText.innerText = loadingText;
-
-        // UI State: Reset and show loading spinner
         inputField.value = "";
-        addMessage(query, true); // Add user query to history
-
+        addMessage(query, true);
         sendBtn.disabled = true;
-        spinner.classList.remove("d-none");
 
         Ajax.call([
           {
@@ -89,10 +86,10 @@ define(["core/ajax", "core/notification"], function (Ajax, Notification) {
           })
           .fail(Notification.exception)
           .always(() => {
-            // Reset the button to its original state
             sendBtn.disabled = false;
-            spinner.classList.add("d-none");
-            btnText.innerText = "Erschließen"; // Back to original German CTA
+            // Safety check again
+            if (spinner) spinner.classList.add("d-none");
+            if (btnText) btnText.innerText = "Erschließen";
           });
       };
 
