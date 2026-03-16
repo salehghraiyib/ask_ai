@@ -1,16 +1,25 @@
-<div class="block_ask_ai">
-    <div id="ask-ai-chatbox-{{instanceid}}" class="d-flex flex-column" style="height: 350px;">
-        
-        <div id="ai-history-{{instanceid}}" class="flex-grow-1 overflow-auto p-2 border rounded bg-light mb-2" style="font-size: 0.9rem;">
-            <div class="text-muted small mb-2">Hello! I'm your course assistant. How can I help you today?</div>
+<div class="block_ask_ai mb-4" id="block-ask-ai-{{instanceid}}">
+    <div class="navigator-container p-0"> 
+        <h5 class="text-primary d-flex justify-content-between align-items-center mb-4 fw-bold">
+            CATI Wissens-Navigator
+        </h5>
+
+        <div class="navigator-field mb-3 position-relative">
+            <label class="small text-muted mb-0 ms-4 bg-white px-1 position-absolute navigator-label">
+                Ihr Einstieg in das Wissensnetzwerk
+            </label>
+            <div class="input-group">
+                <input type="text" id="ai-input-{{instanceid}}" 
+                       class="form-control rounded-pill border-light bg-light p-3 ps-4 shadow-sm" 
+                       placeholder="Welches Thema möchten Sie heute erschließen?">
+            </div>
         </div>
 
-        <div class="input-group">
-            <input type="text" id="ai-input-{{instanceid}}" class="form-control" placeholder="Ask a question..." aria-label="Ask AI">
-            <button class="btn btn-primary" type="button" id="ai-send-{{instanceid}}">
-                <span id="ai-btn-text-{{instanceid}}">Send</span>
-                <span id="ai-btn-spinner-{{instanceid}}" class="spinner-border spinner-border-sm d-none" role="status"></span>
-            </button>
-        </div>
+<button class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm" id="ai-send-{{instanceid}}">
+    <span id="ai-btn-text-{{instanceid}}">Erschließen</span>
+</button>
+
+        <div id="ai-history-{{instanceid}}" class="mt-4 p-0 d-none">
+            </div>
     </div>
 </div>

@@ -1,12 +1,38 @@
-.block_ask_ai .badge {
-    font-weight: normal;
-    white-space: pre-wrap;
-    display: inline-block;
-    line-height: 1.4;
+.block_ask_ai.card {
+    border: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
-.block_ask_ai #ai-history {
-    scrollbar-width: thin;
-    display: flex;
-    flex-direction: column;
+/* Remove padding added by Moodle core to block content */
+.block_ask_ai .card-body {
+    padding: 0 !important;
+}
+
+.block_ask_ai .navigator-label {
+    z-index: 10;
+    top: -10px;
+    left: 20px;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.block_ask_ai .ai-reply {
+    background: #ffffff;
+    border-left: 4px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.block_ask_ai .user-query {
+    background: #007bff;
+    color: white;
+    border-radius: 20px 20px 0 20px;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    float: right;
+    clear: both;
+    margin-bottom: 1rem;
 }

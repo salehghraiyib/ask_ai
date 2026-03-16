@@ -2,7 +2,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_ask_ai';
-$plugin->version   = 2026022307;
+$plugin->version   = 2026022309;
 $plugin->requires  = 2024100700;
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = 'v1.0';

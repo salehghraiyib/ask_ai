@@ -15,6 +15,10 @@ class block_ask_ai extends block_base {
         $this->title = get_string('pluginname', 'block_ask_ai');
     }
 
+    public function instance_allow_config() {
+        return true;
+    }
+
     /**
      * Returns the content to be displayed inside the block.
      *
@@ -58,10 +62,10 @@ class block_ask_ai extends block_base {
      */
     public function applicable_formats() {
         return [
-            'course-view'    => true, // Allow on course main page.
-            'site'           => true, // Disallow on front page.
-            'mod'            => true,  // Allow inside activities
-            'my'             => true, // Disallow on Dashboard
+            'course-view'    => true,
+            'site'           => true,
+            'mod'            => true, 
+            'my'             => true, 
         ];
     }
 
