@@ -7,7 +7,8 @@ if ($ADMIN->fulltree) {
         'block_ask_ai/gemini_api_key',
         get_string('api_key_label', 'block_ask_ai'),
         get_string('api_key_desc', 'block_ask_ai'),
-        ''
+        '',
+        PARAM_RAW
     ));
 
     // Model selection setting.
@@ -19,7 +20,7 @@ if ($ADMIN->fulltree) {
         PARAM_TEXT
     ));
 
-    $reindexurl = new moodle_url('/admin/settings.php', [
+    $reindexurl = new \moodle_url('/admin/settings.php', [
         'section' => 'blocksettingask_ai',
         'action' => 'reindex'
     ]);
