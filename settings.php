@@ -3,7 +3,7 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
     // API Key setting.
-    $settings->add(new admin_setting_configpasswordunmask(
+    $settings->add(new admin_setting_configtext(
         'block_ask_ai/gemini_api_key',
         get_string('api_key_label', 'block_ask_ai'),
         get_string('api_key_desc', 'block_ask_ai'),
