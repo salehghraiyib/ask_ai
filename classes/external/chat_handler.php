@@ -32,7 +32,9 @@ class chat_handler extends external_api {
         ]);
 
         // Validate system context since this is now a site-wide assistant.
-        self::validate_context(context_system::instance());
+        $context = context_system::instance();
+        self::validate_context($context);
+        require_capability('block/ask_ai:view', $context);
 
         try {
             // 1. Convert user query into an embedding vector.

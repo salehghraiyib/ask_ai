@@ -15,7 +15,7 @@ if ($ADMIN->fulltree) {
         'block_ask_ai/model',
         get_string('model_label', 'block_ask_ai'),
         get_string('model_desc', 'block_ask_ai'),
-        'gemini-1.5-flash',
+        'gemini-2.5-flash-lite',
         PARAM_TEXT
     ));
 
