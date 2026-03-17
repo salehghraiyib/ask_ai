@@ -15,9 +15,20 @@ class block_ask_ai extends block_base {
         return true;
     }
 
-    public function init() {
-        $this->title = get_string('pluginname', 'block_ask_ai');
+public function init() {
+    $this->title = get_string('pluginname', 'block_ask_ai');
+
+    if (optional_param('action', '', PARAM_ALPHA) === 'reindex') {
+        require_admin();
+        
+        // Use the new adhoc class here
+        $task = new \block_ask_ai\task\reindex_adhoc();
+        
+        \core\task\manager::queue_adhoc_task($task, true);
+        
+        \core\notification::success(get_string('reindex_queued', 'block_ask_ai'));
     }
+}
 
     public function instance_allow_config() {
         return true;

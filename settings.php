@@ -19,4 +19,16 @@ if ($ADMIN->fulltree) {
         PARAM_TEXT
     ));
 
+    $reindexurl = new moodle_url('/admin/settings.php', [
+        'section' => 'blocksettingask_ai',
+        'action' => 'reindex'
+    ]);
+
+    // Add a heading with a button
+    $settings->add(new admin_setting_heading(
+        'block_ask_ai/reindex_heading',
+        get_string('index_mgmt', 'block_ask_ai'),
+        '<a href="'.$reindexurl.'" class="btn btn-primary">' . get_string('reindex_button', 'block_ask_ai') . '</a>'
+    ));
+
 }
