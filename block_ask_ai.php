@@ -17,19 +17,6 @@ class block_ask_ai extends block_base {
 
 public function init() {
     $this->title = get_string('pluginname', 'block_ask_ai');
-
-    // ONLY run this if we are explicitly in the admin area and the action is set.
-    // This prevents the code from 'pre-loading' and crashing the JS on other pages.
-    if (is_siteadmin() && optional_param('action', '', PARAM_ALPHA) === 'reindex') {
-        
-        // We delay the task loading until the last possible second.
-        $task = new \block_ask_ai\task\reindex_adhoc();
-        \core\task\manager::queue_adhoc_task($task, true);
-        
-        // Redirect back to the settings page to 'clean' the URL and show the message properly.
-        $returnurl = new moodle_url('/admin/settings.php', ['section' => 'blocksettingask_ai']);
-        redirect($returnurl, get_string('reindex_queued', 'block_ask_ai'), 5);
-    }
 }
 
     public function instance_allow_config() {

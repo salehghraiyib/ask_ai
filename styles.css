@@ -3,8 +3,12 @@
  * These rules strip away the standard Moodle block container.
  */
 
- .block_ask_ai .card-title {
+.block_ask_ai .card-title {
     display: none !important;
+}
+
+.block_ask_ai h5.text-primary {
+    color: #15385f !important;
 }
 
 /* Remove the white box, border, and shadow from the Moodle block itself */
@@ -42,61 +46,76 @@
 }
 
 /**
- * Response Area: Single-Response Bordered Design
- * This makes the AI reply look like a distinct part of the plugin.
+ * Response Area: Native Portal Text Style
+ * Matches the clean, flat look of standard CATI content blocks.
  */
 
-/* The main container for the AI's answer */
-.block_ask_ai .ai-response-card {
-    background: #ffffff;
-    border: 2px solid #007bff; /* The blue border you requested */
-    border-radius: 12px;
-    position: relative;
-    margin-top: 30px; /* Space for the badge */
-    padding: 1.5rem;
-    color: #333;
-    line-height: 1.6;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+/* Flatten the user query label to look like a subtle subtext */
+.block_ask_ai .user-query-label {
+    border-left: none; /* Removed the grey bar */
+    padding-left: 0;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-style: normal;
+    color: #6c757d;
+    font-size: 0.9rem;
 }
 
-/* The "Navigator Antwort" badge pinned to the top border */
+/* Remove the chat-box borders, shadows, and background */
+.block_ask_ai .ai-response-card {
+    background: transparent;
+    border: none; /* Removed the 2px blue border */
+    border-radius: 0;
+    margin-top: 1.5rem;
+    padding: 1.5rem 0 0 0; /* Flush padding, space at the top */
+    color: #333; /* Standard dark grey text */
+    line-height: 1.6;
+    box-shadow: none; /* Removed shadow */
+    border-top: 1px solid #e9ecef; /* Subtle light-grey line to separate it from the search bar */
+}
+
+/* Transform the floating blue pill into a standard native heading */
 .block_ask_ai .ai-response-card::before {
     content: "Navigator Antwort";
-    position: absolute;
-    top: -14px;
-    left: 20px;
-    background: #007bff;
-    color: white;
-    padding: 2px 15px;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    position: relative; /* Brings it back into the normal text flow */
+    display: block; /* Makes it stack like a header */
+    top: auto;
+    left: auto;
+    background: transparent; /* Removes the blue background */
+    color: #15385f; /* Portal dark blue */
+    padding: 0;
+    margin-bottom: 0.75rem;
+    border-radius: 0;
+    font-size: 1.1rem; /* Slightly larger like the CATI header */
     font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: none;
 }
 
 /**
- * User Query: Minimalist Label
+ * Buttons: Course Links & Main Action
  */
 
-/* Shows what the user just asked above the AI response */
-.block_ask_ai .user-query-label {
-    border-left: 3px solid #dee2e6;
-    padding-left: 15px;
-    margin-bottom: 15px;
-    font-style: italic;
-    color: #6c757d;
-}
-
-/* Ein schlichter, professioneller Button für den Kurs-Link */
-.block_ask_ai .btn-outline-primary {
-    border-width: 2px;
-    transition: all 0.2s ease;
-    text-transform: none; /* Kein automatisches Großschreiben */
-}
-
+.block_ask_ai .custom-nav-btn:hover,
 .block_ask_ai .btn-outline-primary:hover {
-    background-color: #007bff;
-    color: white;
+    background-color: #15385f !important;
+    color: white !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+}
+
+/* Change the main Erschließen button to match (Bulletproof White Text) */
+.block_ask_ai button.btn-primary,
+.block_ask_ai button.btn-primary span,
+.block_ask_ai button.btn-primary:focus,
+.block_ask_ai button.btn-primary:active {
+    background-color: #15385f !important;
+    border-color: #15385f !important;
+    color: #ffffff !important; /* Forces the button text to be pure white */
+}
+
+.block_ask_ai button.btn-primary:hover,
+.block_ask_ai button.btn-primary:hover span {
+    background-color: #0f2a48 !important; /* Slightly darker blue on hover */
+    border-color: #0f2a48 !important;
+    color: #ffffff !important; /* Keeps the text white on hover */
 }

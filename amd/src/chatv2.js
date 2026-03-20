@@ -18,18 +18,19 @@ define(["core/ajax", "core/notification"], function (Ajax, Notification) {
         // 2. Standard-Markdown für Fettgedrucktes
         html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-        // 3. Den Button-Marker suchen und in einen sauberen Button umwandeln
-        // Wir nutzen das Format [BUTTON:Kursname|URL], das wir in der PHP-Instruktion definiert haben
-        const buttonRegex = /\[BUTTON:(.*?)\|(https?:\/\/[^\s\]]+)\]/g;
+        // 3. Den Button-Marker suchen (toleranter gegenüber Leerzeichen)
+        const buttonRegex = /\[BUTTON:(.*?)\|(.*?)\]/g;
 
         html = html.replace(buttonRegex, function (match, courseName, url) {
-          // Wir geben hier einen kompakten Container zurück, der NICHT von <br> unterbrochen wird
+          // Entfernt alle versehentlichen Leerzeichen aus der URL (z.B. "https:// cati...")
+          const cleanUrl = url.replace(/\s+/g, '').trim();
+          
           return `<div class="button-container mt-2">
-                    <a href="${url.trim()}" target="_blank" class="btn btn-outline-primary rounded-pill px-4 shadow-sm fw-bold">
+                    <a href="${cleanUrl}" target="_blank" class="btn btn-outline-primary custom-nav-btn rounded-pill px-4 shadow-sm fw-bold">
                         ${courseName} <i class="fa fa-external-link ms-1"></i>
                     </a>
                 </div>`;
-        });
+        }); 
 
         // 4. Bereinigung: Falls die KI noch alte Markdown-Links [Name](URL) sendet,
         // entfernen wir die Klammern, um doppelten Text zu vermeiden.
